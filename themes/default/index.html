@@ -1,0 +1,110 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>{#$site_title#}</title>
+<meta name="Keywords" content="{#$site_keywords#}" />
+<meta name="Description" content="{#$site_description#}" />
+<meta name="Copyright" content="Powered By hanfox.com" />
+<link href="{#$site_root#}themes/default/skin/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">var $root = '{#$site_root#}'; var $linktype = '{#$option.link_struct#}';</script>
+<script type="text/javascript" src="{#$site_root#}public/scripts/jquery.min.js"></script>
+<script type="text/javascript" src="{#$site_root#}public/scripts/common.js"></script>
+</head>
+
+<body>
+<div class="wrapper">
+	<div class="header">
+		<div class="clearfix topbox">
+			<a href="{#$site_url#}" class="logo" title="{#$site_title#}"></a>
+			<div class="sobox">
+				<form name="sofrm" class="sofrm" method="get" action="" onSubmit="return rewrite_search()">
+				<input name="mod" type="hidden" id="mod" value="search" />
+				<input name="type" type="hidden" id="type" value="name" />
+				<div id="selopt">
+					<div id="cursel">网站名称</div>
+					<ul id="options">
+						<li><a href="javascript: void(0);" name="name">网站名称</a></li>
+						<li><a href="javascript: void(0);" name="url">网站地址</a></li>
+						<li><a href="javascript: void(0);" name="tags">TAG标签</a></li>
+						<li><a href="javascript: void(0);" name="intro">网站描述</a></li>
+					</ul>
+				</div>
+				<input name="query" type="text" class="sipt" id="query" onFocus="this.value='';" /><input type="submit" class="sbtn" value="搜 索" />
+				</form>
+			</div>
+		</div>
+		<ul class="navbar">
+			<li><a href="?mod=index">网站首页</a></li><li class="navline"></li>
+			<li><a href="?mod=addurl">网站提交</a></li><li class="navline"></li>
+			<li><a href="?mod=webdir">网站目录</a></li><li class="navline"></li>
+			<li><a href="?mod=category">分类浏览</a></li><li class="navline"></li>
+			<li><a href="?mod=update">最新收录</a></li><li class="navline"></li>
+			<li><a href="?mod=archives">数据归档</a></li><li class="navline"></li>
+			<li><a href="?mod=top">TOP排行榜</a></li><li class="navline"></li>
+			<li><a href="?mod=feedback">意见反馈</a></li><li class="navline"></li>
+			
+		</ul>
+	</div>
+	<div class="blank10"></div>
+	<div>{#get_adver('ad_1000x100')#}</div>
+</div>
+<div class="blank10"></div>
+<div class="wrapper">
+	<div class="homebox">
+		<div class="homebox-left">			
+			<dl class="clearfix hcatebox">
+				{#foreach from=get_categories() item=cate#}
+				<dt><a href="{#$cate.cate_link#}">{#$cate.cate_name#}</a></dt>
+				<dd>
+					<ul class="hcatelist">
+						{#foreach from=get_categories($cate.cate_id) item=scate#}
+						<li><a href="{#$scate.cate_link#}">{#$scate.cate_name#}</a></li>
+						{#/foreach#}
+					</ul>
+				</dd>
+				{#/foreach#}
+			</dl>
+		</div>
+		<div class="homebox-right">
+			<div class="famebox">
+				<h3><span>站长推荐</span></h3>
+				<ul class="clearfix famelist">
+					{#foreach from=get_websites(0, 10, true) item=fame#}
+					<li><a href="{#$fame.web_link#}" title="{#$fame.web_name#}"><img src="{#$fame.web_thumb#}" width="125" height="100" alt="{#$fame.web_name#}"><br>{#$fame.web_name#}</a></li>
+					{#/foreach#}
+				</ul>      
+			</div>
+			<div class="blank10"></div>
+			<div class="clearfix coolbox">
+				<h3>酷站导航</h3>
+				<ul class="csitelist">
+					{#foreach from=get_best_categories() item=item#}
+					<li><h4><a href="{#$item.cate_link#}">{#$item.cate_name#}</a></h4><a href="{#$item.cate_link#}" class="more">更多>></a>{#foreach from=get_websites($item.cate_id, 5) item=cool#}<span><a href="{#$cool.web_link#}" title="{#$cool.web_name#}">{#$cool.web_name#}</a></span>{#/foreach#}</li>
+					{#/foreach#}
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="blank10"></div>
+<div class="wrapper">
+	<div class="blank10"></div>
+	<div class="clearfix linkbox">
+    	<h3>友情链接</h3>
+		<ul class="linklist">
+      		{#foreach from=get_links() item=link#}
+			<li><a href="{#$link.link_url#}" target="_blank">{#$link.link_name#}</a></li>
+        	{#/foreach#}
+    	</ul>
+	</div>
+</div>
+<div class="blank10"></div>
+<div class="wrapper">
+	<div class="footer">
+		<div class="fmenu">{#foreach from=get_pages() item=item#}<a href="{#$item.page_link#}">{#$item.page_name#}</a> | {#/foreach#}<a href="?mod=addurl">网站提交</a> | <a href="?mod=update">最新收录</a> | <a href="?mod=archives">数据归档</a> | <a href="?mod=top">TOP排行榜</a> | <a href="?mod=sitemap">站点地图</a></div>
+		<div class="fcopy">{#insert name="script_time"#}{#$site_copyright#}</div>
+	</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,46 @@
+{#include file="header.html"#}
+
+<div class="wrapper">
+	<div class="mainbox">
+		<div class="mainbox-left">
+			<div class="clearfix listbox">
+				<h3>以下是与“{#$keyword#}”相关的内容</h3>
+				<ul class="sitelist">
+					{#foreach from=$websites item=w#}
+					<li>
+						<a href="{#$w.web_link#}"><img src="{#$w.web_thumb#}" width="120" height="90" alt="{#$w.web_name#}" class="thumb" /></a><div class="info"><a href="{#$w.web_link#}" class="title" title="{#$w.web_name#}">{#$w.web_name#}</a><div class="intro">{#$w.web_intro#}</div><div class="url"><a href="{#$w.full_url#}" target="_blank" class="visit" onclick="clickout({#$w.web_id#})">{#$w.web_url#}</a> - {#$w.web_utime#}</div></div>
+					</li>
+					{#foreachelse#}
+					<li>该目录下无任何内容！</li>
+					{#/foreach#} 
+				</ul>
+				<div class="clearfix showpage">{#$showpage#}</div>
+			</div>
+		</div>
+		<div class="mainbox-right">
+			<div style="height: 250px;">
+				{#get_adver('ad_250x250')#}
+			</div>
+			<div class="blank10"></div>
+			<div class="hotbox">
+				<h3>最受欢迎</h3>
+				<ul class="hotlist">
+					{#foreach from=get_websites(0, 10, false, false, false, 'views') item=hot name=hotlist#}
+					<li><em>热度 / {#$hot.web_views#}℃</em><span>{#$smarty.foreach.hotlist.iteration#}.</span> &nbsp;<a href="{#$hot.web_link#}" title="{#$hot.web_name#}">{#$hot.web_name#}</a></li>
+					{#/foreach#}
+				</ul>
+			</div>
+			<div class="blank10"></div>
+			<div class="bestbox">
+				<h3>推荐站点</h3>
+				<ul class="bestlist">
+					{#foreach from=get_websites(0, 10, true) item=best#}
+					<li><a href="{#$best.web_link#}" title="{#$best.web_name#}">{#$best.web_name#}</a></li>
+					{#/foreach#}
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+
+{#include file="footer.html"#}

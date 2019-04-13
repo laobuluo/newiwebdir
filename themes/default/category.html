@@ -1,0 +1,25 @@
+{#include file="header.html"#}
+
+<div class="wrapper">
+	<div class="mainbox">
+    	<div class="mainbox-left">
+			{#foreach from=get_categories() item=c#}
+        	<div class="clearfix catebox">
+				<h3><a href="{#$c.cate_link#}" title="{#$c.cate_name#}">{#$c.cate_name#}</a>&nbsp;<em>({#$c.cate_postcount#})</em></h3>
+				<ul class="catelist">
+					{#foreach from=get_categories($c.cate_id) item=sc#}
+                	<li><a href="{#$sc.cate_link#}" title="{#$sc.cate_name#}">{#$sc.cate_name#}</a>&nbsp;<em>({#$sc.cate_postcount#})</em></li>
+                	{#/foreach#}
+            	</ul>
+        	</div>
+        	{#/foreach#} 
+    	</div>
+		<div class="mainbox-right">
+			<div>{#get_adver('ad_250x250')#}</div>
+        	<div class="blank10"></div>
+        	<div>{#get_adver('ad_250x250')#}</div>
+    	</div>
+	</div>
+</div>
+
+{#include file="footer.html"#}

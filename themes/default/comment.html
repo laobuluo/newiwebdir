@@ -1,0 +1,57 @@
+{#include file="header.html"#}
+
+<div class="wrapper">
+	<div class="mainbox">
+		<div class="mainbox-left">
+			<div class="clearfix listbox">
+				<h3><a href="{#$web_link#}">《{#$web_name#}》</a>的评论信息</h3>
+				<div class="comment">
+					<ul class="comment-list">
+						{#foreach from=$comments item=com name=comlist#}
+						<li>
+							<div class="comment-gravatar"><img src="http://www.gravatar.com/avatar/{#$com.com_email|md5#}?s=50&d=mm&r=g0" alt="{#$com.com_nick#}"><br>{#$com.com_nick#}</div>
+							<div class="comment-title">{#$smarty.foreach.comlist.iteration#}楼 {#$com.com_nick#}　<time>{#$com.com_time#}</time></div>
+							<div class="comment-text">{#$com.com_text#}</div>
+							{#if $com.reply_comments#}
+							{#foreach from=$com.reply_comments item=rcom#}
+							<div class="comment-reply">
+								<span class="gre">{#$rcom.com_nick#} 于 {#$rcom.com_time#} 回复</span><br>{#$rcom.com_text#}
+							</div>
+							{#/foreach#}
+							{#/if#}
+						</li>
+						{#foreachelse#}
+						<li>无任何评论信息！</li>
+						{#/foreach#}
+					</ul>
+				</div>
+				<div class="clearfix showpage">{#$showpage#}</div>
+			</div>
+		</div>
+		<div class="mainbox-right">
+			<div style="height: 250px;">
+				{#get_adver('ad_250x250')#}
+			</div>
+			<div class="blank10"></div>
+			<div class="hotbox">
+				<h3>最受欢迎</h3>
+				<ul class="hotlist">
+					{#foreach from=get_websites(0, 10, false, false, false, 'views') item=hot name=hotlist#}
+					<li><em>热度 / {#$hot.web_views#}℃</em><span>{#$smarty.foreach.hotlist.iteration#}.</span> &nbsp;<a href="{#$hot.web_link#}" title="{#$hot.web_name#}">{#$hot.web_name#}</a></li>
+					{#/foreach#}
+				</ul>
+			</div>
+			<div class="blank10"></div>
+			<div class="bestbox">
+				<h3>推荐站点</h3>
+				<ul class="bestlist">
+					{#foreach from=get_websites(0, 10, true) item=best#}
+					<li><a href="{#$best.web_link#}" title="{#$best.web_name#}">{#$best.web_name#}</a></li>
+					{#/foreach#}
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+
+{#include file="footer.html"#}

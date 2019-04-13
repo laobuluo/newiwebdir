@@ -1,0 +1,1 @@
+<div class="foot">Copyright &copy; 2008-2014 iWebDir网站分类目录 (iwebdir.cn)</div>

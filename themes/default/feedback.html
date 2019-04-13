@@ -1,0 +1,18 @@
+{#include file="header.html"#}
+
+<div class="wrapper">
+	<div class="subbox">
+		<h2>意见/建议反馈</h2>
+		<form name="fbfrom" id="fbfrom" method="post" action="">
+		<ul class="formbox">
+			<li class="clearfix"><strong>用户昵称：</strong><p><input type="text" name="nick" id="nick" class="fipt" size="50" maxlength="50" /></p></li>
+			<li class="clearfix"><strong>电子邮件：</strong><p><input type="text" name="email" id="email" class="fipt" size="50" maxlength="50" /></p></li>
+			<li class="clearfix"><strong>意见内容：</strong><p><textarea name="content" id="content" cols="52" rows="8" class="fipt"></textarea></p></li>
+			<li class="clearfix"><strong>验证代码：</strong><p><input type="text" name="checkcode" id="checkcode" class="fipt" size="6" maxlength="6" onfocus="refreshimg('mycode');" /> <span class="tips" id="mycode">点击输入框即可显示验证码</span></p></li>
+			<li class="clearfix"><strong>&nbsp;</strong><p><input type="submit" name="submit" class="fbtn" value="提 交"></p></li>
+		</ul>
+		</form>
+	</div>
+</div>
+
+{#include file="footer.html"#}

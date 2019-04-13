@@ -1,0 +1,87 @@
+{#include file="header.html"#}
+
+	{#if $action == 'list'#}
+    <h3 class="title"><em>广告列表</em><span><a href="{#$fileurl#}?act=add">+添加新广告</a></span></h3>
+	<div class="listbox">
+        <form name="mform" method="post" action="{#$fileurl#}">
+        <div class="search">
+        	<input name="keywords" type="text" id="keywords" class="ipt" size="30" value="{#$keywords#}" />
+        	<input type="submit" class="btn" value="搜索" />
+        </div>
+        </form>
+        
+        <form name="mform" method="post" action="{#$fileurl#}">
+        <div class="toolbar">
+        	<select name="act" id="act" class="sel">
+        	<option value="del" style="color: #FF0000;">删除选定</option>
+        	</select>
+        	<input type="submit" class="btn" value="应用" onClick="if(IsCheck('adver_id[]')==false){alert('请指定您要操作的广告ID！');return false;}else{return confirm('确认执行此操作吗？');}">
+        </div>
+                        
+    	<table width="100%" border="0" cellspacing="1" cellpadding="0">
+			<tr>
+				<th><input type="checkbox" id="ChkAll" onClick="CheckAll(this.form)"></th>
+				<th>ID</th>
+				<th>广告名称</th>
+				<th>有效天数</th>
+				<th>广告状态</th>
+				<th>到期时间</th>
+				<th>操作选项</th>
+			</tr>
+			{#foreach from=$advers item=row#}
+			<tr>
+				<td><input name="adver_id[]" type="checkbox" value="{#$row.adver_id#}"></td>
+				<td>{#$row.adver_id#}</td>
+				<td>{#$row.adver_name#}</td>
+				<td>{#$row.adver_days#}</td>
+				<td>{#$row.adver_status#}</td>
+				<td>{#$row.adver_time#}</td>
+				<td>{#$row.adver_oper#}</td>
+			</tr>
+			{#foreachelse#}
+			<tr><td colspan="8">无任何网站广告！</td></tr>
+			{#/foreach#}
+		</table>
+		</form>
+        <div class="pagebox">{#$showpage#}</div>
+	</div>
+    {#/if#}
+
+	{#if $action == 'add' || $action == 'edit'#}
+    <h3 class="title"><em>{#$pagetitle#}</em><span><a href="{#$fileurl#}">返回列表&nbsp;&rsaquo;&nbsp;</a></span></h3>
+    <div class="formbox">
+    	<form name="mform" method="post" action="{#$fileurl#}">
+		<table width="100%" border="0" cellspacing="1" cellpadding="0">
+			<tr>
+				<th>广告名称：</th>
+				<td><input name="adver_name" type="text" class="ipt" id="adver_name" size="50" maxlength="50" value="{#$row.adver_name#}" /></td>
+			</tr>
+			<tr>
+				<th valign="top">广告代码：</th>
+				<td><textarea name="adver_code" cols="50" rows="10" class="ipt" id="adver_code">{#$row.adver_code#}</textarea></td>
+			</tr>
+			<tr>
+				<th>过期提示：</th>
+				<td><input name="adver_etips" type="text" class="ipt" id="adver_etips" size="50" maxlength="50" value="{#$row.adver_etips#}" /></td>
+			</tr>
+			<tr>
+				<th>有效天数：</th>
+				<td><input name="adver_days" type="text" class="ipt" id="adver_days" size="10" maxlength="3" value="{#(!$row.adver_days) ? '0' : $row.adver_days#}" /> 天<span class="tips">当有效天数为0时，表示广告长期有效</span></td>
+			</tr>
+			<tr class="btnbox">
+            	<th>&nbsp;</th>
+				<td>
+					<input name="act" type="hidden" id="act" value="{#$h_action#}">
+					{#if $action == 'edit' && $row.adver_id#}
+					<input name="adver_id" type="hidden" id="adver_id" value="{#$row.adver_id#}">
+					{#/if#}
+					<input type="submit" class="btn" value="保 存">&nbsp;
+					<input type="reset" class="btn" value="取 消" onClick="window.location.href='{#$fileurl#}';">
+				</td>
+			</tr>
+		</table>
+		</form>
+	</div>           
+	{#/if#}
+
+{#include file="footer.html"#}

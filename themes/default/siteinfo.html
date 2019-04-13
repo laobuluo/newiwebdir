@@ -1,0 +1,87 @@
+﻿{#include file="header.html"#}
+
+<div class="wrapper">
+	<div class="mainbox">
+		<div class="mainbox-left">
+			<div class="sitebox">
+				<h1 class="wtitle"><a href="{#$web.full_url#}" target="_blank" onclick="clickout({#$web.web_id#})">{#$web.web_name#}</a></h1>
+				<ul class="wdata"><li class="line"><em style="color: #f00;">{#$web.web_views#}℃</em>关注热度</li><li class="line"><em style="color: #083;">{#$web.web_brank#}</em>百度权重</li><li class="line"><em style="color: #083;">{#$web.web_grank#}</em>PageRank</li><li class="line"><em style="color: #083;">{#$web.web_srank#} / 10</em>搜狗评级</li><li class="line"><em style="color: #083;">{#$web.web_arank#}</em>AlexaRank</li><li class="line"><em>{#$web.web_instat#}</em>入站次数</li><li class="line"><em>{#$web.web_outstat#}</em>出站次数</li><li class="line"><em>{#$web.web_ctime#}</em>收录日期</li><li><em style="color: #f60;">{#$web.web_utime#}</em>更新日期</li></ul>
+				<ul class="siteinfo">
+					<li><strong>网站标题：</strong>{#$web.web_title#}</li>
+					<li><strong>网站地址：</strong><a href="{#$web.full_url#}" target="_blank" class="visit" onclick="clickout({#$web.web_id#})"><font color="#008000">{#$web.web_url#}</font></a></li>
+					<li><strong>网站评分：</strong><span id="score"></span><span id="result" style="color: #f30; font: bold 12px Arial; padding: 5px;"></span></li>
+					<li><strong>服务器IP：</strong>{#$web.web_ip#}</li>
+					<li><strong>TAG标签：</strong>{#foreach from=$web_tags item=item#}<a href="{#$item.tag_link#}">{#$item.tag_name#}</a>　{#/foreach#}</li>
+					<li><strong>网站描述：</strong><span style="line-height: 23px;">{#$web.web_intro#}</span></li>
+					<li>{#get_adver('google_468x15')#}</li>
+				</ul>
+				<div class="relsite">
+					<h3>相关站点</h3>
+					<ul class="rellist">
+						{#foreach from=$relateds item=rel#}
+						<li><a href="{#$rel.web_link#}"><img src="{#$rel.web_thumb#}" width="120" height="95" alt="{#$rel.web_name#}" /><strong>{#$rel.web_name#}</strong></a></li>
+						{#/foreach#}
+					</ul>
+				</div>
+				<div class="blank10"></div>
+				<div class="comment">
+					<h3>{#$web.web_name#}的精彩点评</h3>
+					<ul class="comment-list">
+						{#foreach from=$comments item=com name=comlist#}
+						<li>
+							<div class="comment-gravatar"><img src="http://www.gravatar.com/avatar/{#$com.com_email|md5#}?s=50&d=mm&r=g0" alt="{#$com.com_nick#}"><br>{#$com.com_nick#}</div>
+							<div class="comment-title">{#$smarty.foreach.comlist.iteration#}楼 {#$com.com_nick#}　<time>{#$com.com_time#}</time></div>
+							<div class="comment-text"><a href="#comment" style="float: right;" onClick="$('#rid').val({#$com.com_id#});">回复</a>{#$com.com_text#}</div>
+							{#if $com.reply_comments#}
+							{#foreach from=$com.reply_comments item=rcom#}
+							<div class="comment-reply">
+								<span class="gre">{#$rcom.com_nick#} 于 {#$rcom.com_time#} 回复</span><br>{#$rcom.com_text#}
+							</div>
+							{#/foreach#}
+							{#/if#}
+						</li>
+						{#foreachelse#}
+						<li>无任何评论信息！</li>
+						{#/foreach#}
+					</ul>
+					<div align="right"><a href="?mod=comment&wid={#$web.web_id#}">查看更多关于《{#$web.web_name#}》的评论 &raquo;</a></div>
+					<div class="blank10"></div>
+					<h3>发表评论</h3>
+					<div class="comment-form">
+						<ul class="formbox" style="padding-left: 100px; padding-top: 20px;">
+						<form name="cform" id="comment" method="post" action="">
+							<li><strong><font color="#ff0000">*</font> 评论内容：</strong><textarea name="content" id="content" cols="52" rows="5" class="fipt"></textarea></li>
+							<li><strong><font color="#ff0000">*</font> 电子邮箱：</strong><input type="text" name="email" id="email" size="50" maxlength="50" class="fipt"></li>
+							<li><strong><font color="#ff0000">*</font> 昵　　称：</strong><input type="text" name="nick" id="nick" size="30" maxlength="10" class="fipt"><input type="hidden" name="rid" id="rid" value="0"><input type="hidden" name="wid" id="wid" value="{#$web.web_id#}"></li>
+							<li><strong>&nbsp;</strong><input type="button" id="button" class="fbtn" value="发表评论" onClick="post_comment();"></li>
+						</form>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="mainbox-right">
+			
+			<div class="hotbox">
+				<h3>本类最受欢迎</h3>
+				<ul class="hotlist">
+					{#foreach from=get_websites($web.cate_id, 10, false, false, false, 'views') item=hot name=hotlist#}
+					<li><em>热度 / {#$hot.web_views#}℃</em><span>{#$smarty.foreach.hotlist.iteration#}.</span> &nbsp;<a href="{#$hot.web_link#}" title="{#$hot.web_name#}">{#$hot.web_name#}</a></li>
+					{#/foreach#}
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript" src="{#$site_root#}public/scripts/jquery.raty.js"></script>
+<script type="text/javascript">
+$('#score').raty({path : '{#$site_root#}public/scripts/star', half : true, target : '#result', targetType : 'number', targetText : '{#$web.web_score#}', score : {#$web.web_score#}, click: function($score, $event) {$.ajax({type: 'POST', url: $root + '?mod=ajaxpost', data: {'type' : 'score', 'score' : $score, 'wid' : '{#$web.web_id#}'}, cache: false, success: function($data){if ($data == 1) {$str = '你已经评过分了！';} else {$str = $data;} $('#result').text($str);}});}});
+</script>
+<script type="text/javascript" src="{#$site_root#}?mod=getdata&type=ip&wid={#$web.web_id#}"></script>
+<script type="text/javascript" src="{#$site_root#}?mod=getdata&type=brank&wid={#$web.web_id#}"></script>
+<script type="text/javascript" src="{#$site_root#}?mod=getdata&type=grank&wid={#$web.web_id#}"></script>
+<script type="text/javascript" src="{#$site_root#}?mod=getdata&type=srank&wid={#$web.web_id#}"></script>
+<script type="text/javascript" src="{#$site_root#}?mod=getdata&type=arank&wid={#$web.web_id#}"></script>
+
+{#include file="footer.html"#}

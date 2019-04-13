@@ -1,0 +1,52 @@
+{#include file="header.html"#}
+
+	{#if $action == 'list'#}
+    <h3 class="title"><em>{#$pagetitle#}</em><span></span></h3>
+	<div class="listbox">
+		<form name="mform" method="post" action="{#$fileurl#}">
+		<div class="search">
+			<input name="keywords" type="text" id="keywords" class="ipt" size="30" value="{#$keywords#}" />
+			<input type="submit" class="btn" value="搜索" />
+        </div>
+        </form>
+                    
+		<form name="mform" method="post" action="{#$fileurl#}">
+		<div class="toolbar">
+			<select name="act" id="act" class="sel">
+			<option value="del" style="color: #f00;">删除选定</option>
+			</select>
+			<input type="submit" class="btn" value="应用" onClick="if(IsCheck('web_id[]')==false){alert('请指定您要操作的站点ID！');return false;}else{return confirm('确认执行此操作吗？');}">
+		</div>
+		
+    	<table width="100%" border="0" cellspacing="1" cellpadding="0">
+			<tr>
+				<th><input type="checkbox" id="ChkAll" onClick="CheckAll(this.form)"></th>
+				<th>ID</th>
+				<th>所属分类</th>
+				<th>网站名称</th>
+				<th>网站域名</th>
+				<th>电子邮箱</th>
+				<th>收录时间</th>
+				<th>操作选项</th>
+			</tr>
+			{#foreach from=$websites item=row#}
+			<tr>
+				<td><input name="web_id[]" type="checkbox" value="{#$row.web_id#}"></td>
+				<td>{#$row.web_id#}</td>
+				<td>{#$row.web_cate#}</td>
+				<td class="ltext">{#$row.web_name#}</td>
+				<td>{#$row.web_url#}</td>
+				<td>{#$row.web_email#}</td>
+				<td>{#$row.web_ctime#}</td>
+				<td>{#$row.web_oper#}</td>
+			</tr>
+			{#foreachelse#}
+			<tr><td colspan="8">无任何网站！</td></tr>
+			{#/foreach#}
+		</table>
+        </form>
+        <div class="pagebox">{#$showpage#}</div>
+    </div>
+    {#/if#}
+
+{#include file="footer.html"#}

@@ -1,0 +1,45 @@
+{#include file="header.html"#}
+
+{#if $option.is_submit_open == 'no'#}
+<div class="wrapper">
+	<div style="background: #ffc; border: dashed 1px #f60; font-size: 14px; padding: 15px; text-align: center;">{#$option.submit_close_reason#}</div>	
+</div>
+<div class="blank10"></div>
+{#else#}
+<div class="wrapper">
+	<div class="textbox">
+	当您完成以下两步后，您的站点将会自动被本站收录。（注意：您必须首先完成第一步，才能做第二步）<br />已经加入的网站如果想取消加入，只需要在您的网站去掉我站的链接，那么我们的系统就会在下次更新时自动去掉您站的链接。谢谢您的理解和支持！<br /><font color="#ff0000">请提交网站的朋友注意了，如果你既想在本站提交，又不想做链接的，请不要来本站，本站不欢迎你！<br />另外请提交网站的朋友，仔细选好分类在提交，不然直接删除！</font>
+	</div>
+	<div class="subbox">
+		<div class="stepbox">
+			<h3>第一步：请在您的网站首页加入我站链接</h3>
+			<p><input type="text" class="fipt" size="60" value="&lt;a href=&quot;http://{#$option.link_url#}/&quot;&gt;{#$option.link_name#}&lt;/a&gt;" readonly /></p>
+		</div>
+		
+		<div class="stepbox">
+			<h3>第二步：填写表单项{#if $option.submit_limit > 0#}（<font color="#ff0000">截至目前，还可以提交{#$submit_limit#}个站点，每日限提交{#$option.submit_limit#}个站点</font>）{#/if#}</h3>
+			<form name="myfrom" id="myfrom" method="post" action="{#$pageurl#}">
+			<ul class="formbox">
+				<li class="clearfix"><strong>选择分类：</strong><p><select name="level_1" id="level_1"></select><input type="hidden" name="cid" id="cid" value="0"><span class="tips">请选择正确的分类，否则不予通过审核</span></p></li>
+				<li class="clearfix"><strong>网站名称：</strong><p><input type="text" name="name" id="name" class="fipt" size="50" maxlength="15" /><span class="tips">限10个字以内，例：{#$option.link_name#}</span></p></li>
+				<li class="clearfix"><strong>网站域名：</strong><p><input type="text" name="url" id="url" class="fipt" size="50" maxlength="50" onKeyPress="strip_http()" onChange="strip_http()" onKeyUp="strip_http()" onBlur="checkurl(this.value)" /><span class="tips" id="msg">例：{#$option.link_url#} (需要http/https)</span></p></li>
+				<li class="clearfix"><strong>网站标题：</strong><p><input type="text" name="title" id="title" class="fipt" size="50" maxlength="100" /><span class="tips">限100个字以内</span></p></li>
+				<li class="clearfix"><strong>TAG标签：</strong><p><input type="text" name="tags" id="tags" class="fipt" size="50" maxlength="100" onblur="javascript:this.value=this.value.replace(/，/ig,',');" /><span class="tips">多个标签之前用英文的逗号“,”隔开</span></p></li>
+				<li class="clearfix"><strong>网站描述：</strong><p><textarea name="intro" id="intro" class="fipt" cols="52" rows="6"></textarea><span class="tips">限100个字以内</span></p></li>
+				<li class="clearfix"><strong>电子邮箱：</strong><p><input type="text" name="email" id="email" class="fipt" size="50" maxlength="50" /><span class="tips">例：{#$option.admin_email#}</span></p></li>
+				<li class="clearfix"><strong>验 证 码：</strong><p><input type="text" name="code" id="code" size="10" maxlength="5" class="fipt" onfocus="refreshimg('mycode');" /><span class="tips" id="mycode">点击输入框即可显示验证码</span></p></li>
+				<li class="clearfix"><strong>&nbsp;</strong><p><input type="submit" name="submit" class="fbtn" value="立即提交"></p></li>
+			</ul>
+			</form>
+		</div>
+	</div>
+</div>
+{#/if#}
+<script type="text/javascript" src="{#$site_root#}public/scripts/linkage.select.js"></script>
+<script type="text/javascript">
+var options = {ajax : '{#$site_root#}?mod=ajaxget&type=category', field_name : '[name=cid]', auto : true};
+var sel = new LinkageSelect(options);
+sel.bind('#level_1');
+</script>
+
+{#include file="footer.html"#}
