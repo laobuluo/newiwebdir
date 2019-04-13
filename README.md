@@ -7,5 +7,9 @@
 
 3、修复缩略图调用第三方API的问题，以及支持http和https网址的加入，之前是不支持的。
 
+修改者：老蒋 https://www.itbulu.com/
+
+详细地址：https://www.laobuluo.com/2320.html 
+
 
 
